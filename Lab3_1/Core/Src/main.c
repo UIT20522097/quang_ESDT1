@@ -147,15 +147,16 @@ int main(void)
   {
 
     /* USER CODE END WHILE */
-	  uint8_t TxData[8] = {0x22, 0x01, 0x23,0x00,0x00,0x00,0x00,0x00};
-	  if(HAL_CAN_AddTxMessage(&hcan,&TxHeader,TxData,&canMailbox)!= HAL_OK)
-	  {
-		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
-		  HAL_Delay(1000);
 
-	  }
-	  HAL_UART_Transmit_IT(&huart1, TxData,sizeof (TxData));
     /* USER CODE BEGIN 3 */
+	  uint8_t TxData[8] = {0x22, 0x01, 0x23,0x00,0x00,0x00,0x00,0x00};
+	 	  if(HAL_CAN_AddTxMessage(&hcan,&TxHeader,TxData,&canMailbox)!= HAL_OK)
+	 	  {
+	 		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
+	 		  HAL_Delay(1000);
+
+	 	  }
+	 	  HAL_UART_Transmit_IT(&huart1, TxData,sizeof (TxData));
   }
 
   /* USER CODE END 3 */
@@ -216,11 +217,11 @@ static void MX_CAN_Init(void)
 
   /* USER CODE END CAN_Init 1 */
   hcan.Instance = CAN1;
-  hcan.Init.Prescaler = 16;
+  hcan.Init.Prescaler = 4;
   hcan.Init.Mode = CAN_MODE_NORMAL;
   hcan.Init.SyncJumpWidth = CAN_SJW_1TQ;
-  hcan.Init.TimeSeg1 = CAN_BS1_1TQ;
-  hcan.Init.TimeSeg2 = CAN_BS2_1TQ;
+  hcan.Init.TimeSeg1 = CAN_BS1_12TQ;
+  hcan.Init.TimeSeg2 = CAN_BS2_5TQ;
   hcan.Init.TimeTriggeredMode = DISABLE;
   hcan.Init.AutoBusOff = DISABLE;
   hcan.Init.AutoWakeUp = DISABLE;
