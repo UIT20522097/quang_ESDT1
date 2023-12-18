@@ -95,14 +95,14 @@ int main(void)
   /* USER CODE BEGIN 1 */
 	canfil.FilterBank = 10;
 	canfil.FilterMode = CAN_FILTERMODE_IDMASK;
-	canfil.FilterFIFOAssignment = CAN_RX_FIFO0;
+	canfil.FilterFIFOAssignment = CAN_FILTER_FIFO0;
 	canfil.FilterIdHigh = 0x712<<5;
 	canfil.FilterIdLow = 0;
 	canfil.FilterMaskIdHigh = 0x712<<5;
-	canfil.FilterMaskIdLow = 0;
+	canfil.FilterMaskIdLow = 0x0000;
 	canfil.FilterScale = CAN_FILTERSCALE_32BIT;
-	canfil.FilterActivation = ENABLE;
-	canfil.SlaveStartFilterBank = 14;
+	canfil.FilterActivation = CAN_FILTER_ENABLE;
+	canfil.SlaveStartFilterBank = 0;
 
 	TxHeader.ExtId = 0;
 	TxHeader.IDE = CAN_ID_STD;
@@ -147,8 +147,8 @@ int main(void)
   {
 
     /* USER CODE END WHILE */
-	  uint8_t TxData[8] = {0x22, 0x01, 0x23,0x00,0x00,0x00,0x00};
-	  if(HAL_CAN_AddTxMessage(&hcan,&TxHeader,TxData,NULL)!= HAL_OK)
+	  uint8_t TxData[8] = {0x22, 0x01, 0x23,0x00,0x00,0x00,0x00,0x00};
+	  if(HAL_CAN_AddTxMessage(&hcan,&TxHeader,TxData,&canMailbox)!= HAL_OK)
 	  {
 		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
 		  HAL_Delay(1000);

@@ -77,7 +77,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	        	  txHeader.StdId = 0x7A2;  // Respond to the tester
 	        	  txHeader.IDE = CAN_ID_STD;
 	        	  txHeader.DLC = sizeof(responseData);
-	        	  HAL_CAN_AddTxMessage(hcan, &txHeader, responseData, NULL);
+	        	  HAL_CAN_AddTxMessage(hcan, &txHeader, responseData, &canMailbox);
 	          }
 	          else
 	          {
@@ -86,7 +86,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	        	  txHeader.StdId = 0x7A2;  // Respond to the tester
 	        	  txHeader.IDE = CAN_ID_STD;
 	        	  txHeader.DLC = sizeof(negativeResponse);
-	        	  HAL_CAN_AddTxMessage(hcan, &txHeader, negativeResponse, NULL);
+	        	  HAL_CAN_AddTxMessage(hcan, &txHeader, negativeResponse, &canMailbox);
 	          }
 	 }
 }
@@ -99,16 +99,16 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	canfil.FilterBank = 0;
+	canfil.FilterBank = 10;
 	canfil.FilterMode = CAN_FILTERMODE_IDMASK;
-	canfil.FilterFIFOAssignment = CAN_RX_FIFO0;
+	canfil.FilterFIFOAssignment = CAN_FILTER_FIFO0;
 	canfil.FilterIdHigh = 0x7A2<<5;
 	canfil.FilterIdLow = 0;
 	canfil.FilterMaskIdHigh = 0x7A2<<5;
-	canfil.FilterMaskIdLow = 0;
+	canfil.FilterMaskIdLow = 0x0000;
 	canfil.FilterScale = CAN_FILTERSCALE_32BIT;
-	canfil.FilterActivation = ENABLE;
-	canfil.SlaveStartFilterBank = 14;
+	canfil.FilterActivation = CAN_FILTER_ENABLE;
+	canfil.SlaveStartFilterBank = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
